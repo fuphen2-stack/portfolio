@@ -12,9 +12,9 @@
             theme: {
                 extend: {
                     colors: {
-                        'deep-bg': '#050B18',
+                        'deep-bg': '#050B18', // 更深邃的背景
                         'card-bg': '#1e293b',
-                        'accent-blue': '#007DFF',
+                        'accent-blue': '#007DFF', // 更接近鸿蒙的蓝色
                         'accent-teal': '#14b8a6',
                         'accent-gold': '#FFA500',
                         'accent-purple': '#8b5cf6',
@@ -22,6 +22,7 @@
                         'gold-card': '#2d2106',
                     },
                     fontFamily: {
+                        // 鸿蒙字体栈
                         'sans': ['"HarmonyOS Sans SC"', '"HarmonyOS Sans"', '-apple-system', 'BlinkMacSystemFont', '"Segoe UI"', 'Roboto', 'sans-serif'],
                     },
                     borderRadius: {
@@ -33,7 +34,7 @@
         }
     </script>
     <style>
-        /* 自定义滚动条 */
+        /* 自定义滚动条 - 更纤细 */
         ::-webkit-scrollbar {
             width: 6px;
         }
@@ -51,7 +52,7 @@
             background: rgba(255, 255, 255, 0.25);
         }
 
-        /* 发光效果 */
+        /* 发光效果类 - 更柔和 */
         .glow-text {
             text-shadow: 0 0 20px rgba(0, 125, 255, 0.4), 0 0 40px rgba(0, 125, 255, 0.15);
         }
@@ -68,7 +69,7 @@
                 linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
         }
 
-        /* 鸿蒙风毛玻璃 */
+        /* 鸿蒙风毛玻璃效果 */
         .glass-card {
             background: rgba(255, 255, 255, 0.05);
             backdrop-filter: blur(20px);
@@ -108,7 +109,7 @@
             border-radius: 20px;
         }
 
-        /* 卡片悬浮 */
+        /* 卡片悬浮效果 - 增加缩放 */
         .card-hover {
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
@@ -122,7 +123,7 @@
             box-shadow: 0 24px 60px rgba(255, 165, 0, 0.18);
         }
 
-        /* 核心项目 */
+        /* 核心项目特殊效果 */
         .featured-project {
             border: 1px solid rgba(139, 92, 246, 0.2);
             background: linear-gradient(135deg, rgba(139, 92, 246, 0.08), rgba(30, 41, 59, 0.8));
@@ -154,7 +155,7 @@
             }
         }
 
-        /* 滚动显示 */
+        /* 滚动显示动画 */
         .fade-in {
             opacity: 0;
             transform: translateY(24px);
@@ -166,7 +167,7 @@
             transform: translateY(0);
         }
 
-        /* 模态框 */
+        /* 模态框样式 */
         .modal-overlay {
             position: fixed;
             inset: 0;
@@ -203,7 +204,7 @@
             transform: scale(1) translateY(0);
         }
 
-        /* 沉浸光感 */
+        /* 沉浸光感 - 光晕效果 */
         .ambient-light {
             position: absolute;
             border-radius: 50%;
@@ -221,7 +222,7 @@
         <div class="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
             <a href="#" class="text-2xl font-bold text-white tracking-tight">李家兴</a>
             <div class="hidden md:flex items-center space-x-8 text-sm font-medium">
-                <a href="#about" class="hover:text-accent-blue transition-colors">关于我</a>
+                <a href="#about" class="hover:text-accent-blue transition-colors text-accent-blue">关于我</a>
                 <a href="#research" class="hover:text-accent-blue transition-colors">研究方向</a>
                 <a href="#education" class="hover:text-accent-blue transition-colors">教育背景</a>
                 <a href="#skills" class="hover:text-accent-blue transition-colors">技能专长</a>
@@ -235,6 +236,7 @@
 
     <!-- Hero Section -->
     <header class="relative min-h-screen flex items-center justify-center overflow-hidden bg-grid glass-hero">
+        <!-- 鸿蒙风沉浸光效 -->
         <div class="ambient-light w-[600px] h-[600px] bg-accent-blue/30 top-1/4 -left-20"></div>
         <div class="ambient-light w-[500px] h-[500px] bg-accent-purple/20 bottom-1/4 -right-20"></div>
 
@@ -269,6 +271,7 @@
         <!-- About Section -->
         <section id="about" class="fade-in">
             <h2 class="text-3xl font-bold text-white mb-12 text-center">关于我</h2>
+            <!-- 核心修改：grid改为items-stretch，右侧改为flex垂直分布实现底部对齐 -->
             <div class="grid md:grid-cols-5 gap-8 items-stretch">
                 <!-- 左侧：照片 -->
                 <div class="md:col-span-2 relative group">
@@ -280,7 +283,7 @@
                     </div>
                 </div>
 
-                <!-- 右侧：文字内容 -->
+                <!-- 右侧：文字内容（flex垂直分布，研究方向自动贴底） -->
                 <div class="md:col-span-3 flex flex-col justify-between">
                     <!-- 上部内容：个人简介+关键数字 -->
                     <div class="mb-auto">
@@ -313,41 +316,29 @@
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-        </section>
 
-        <!-- Research Section (新增) -->
-        <section id="research" class="fade-in">
-            <h2 class="text-3xl font-bold text-white mb-12 text-center">研究方向</h2>
-            <div class="glass-card p-8 rounded-3xl">
-                <div class="grid md:grid-cols-2 gap-6">
-                    <div class="flex items-center gap-4 p-4 bg-white/5 rounded-2xl">
-                        <i class="fas fa-book-open text-accent-purple text-3xl"></i>
-                        <div>
-                            <h4 class="font-bold text-white">智能语料库与自然语言处理</h4>
-                            <p class="text-sm text-gray-400">构建专用语料库，应用NLP技术进行文本挖掘</p>
-                        </div>
-                    </div>
-                    <div class="flex items-center gap-4 p-4 bg-white/5 rounded-2xl">
-                        <i class="fas fa-comments text-accent-purple text-3xl"></i>
-                        <div>
-                            <h4 class="font-bold text-white">多模态话语分析与翻译研究</h4>
-                            <p class="text-sm text-gray-400">结合多模态数据进行话语分析与翻译策略研究</p>
-                        </div>
-                    </div>
-                    <div class="flex items-center gap-4 p-4 bg-white/5 rounded-2xl">
-                        <i class="fas fa-globe text-accent-purple text-3xl"></i>
-                        <div>
-                            <h4 class="font-bold text-white">中国特色话语国际传播</h4>
-                            <p class="text-sm text-gray-400">研究中国话语的国际传播效度与提升路径</p>
-                        </div>
-                    </div>
-                    <div class="flex items-center gap-4 p-4 bg-white/5 rounded-2xl">
-                        <i class="fas fa-graduation-cap text-accent-purple text-3xl"></i>
-                        <div>
-                            <h4 class="font-bold text-white">数字人文与新文科建设</h4>
-                            <p class="text-sm text-gray-400">探索数字技术在人文社科研究中的应用</p>
+                    <!-- 研究方向（自动与左侧照片底部对齐） -->
+                    <div class="glass-card p-6 rounded-2xl mt-8">
+                        <h3 class="text-lg font-bold text-white mb-4 flex items-center gap-2">
+                            <i class="fas fa-compass text-accent-purple"></i> 研究方向
+                        </h3>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="flex items-center gap-3">
+                                <i class="fas fa-book-open text-accent-purple"></i>
+                                <span class="text-sm">智能语料库与自然语言处理</span>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <i class="fas fa-comments text-accent-purple"></i>
+                                <span class="text-sm">多模态话语分析与翻译研究</span>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <i class="fas fa-globe text-accent-purple"></i>
+                                <span class="text-sm">中国特色话语国际传播</span>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <i class="fas fa-graduation-cap text-accent-purple"></i>
+                                <span class="text-sm">数字人文与新文科建设</span>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -467,7 +458,7 @@
         <section id="projects" class="fade-in">
             <h2 class="text-3xl font-bold text-white mb-12">核心项目</h2>
             <div class="space-y-6">
-                <!-- 语词寰响 2026 -->
+                <!-- 语词寰响 2026 最新版本 -->
                 <div class="card-hover glass-featured group relative overflow-hidden rounded-3xl">
                     <div class="p-8">
                         <div class="flex flex-col md:flex-row md:justify-between md:items-start mb-4">
@@ -500,7 +491,7 @@
                     </div>
                 </div>
 
-                <!-- 语词寰响 2025 -->
+                <!-- 语词寰响 2025 互联网+版本 -->
                 <div class="card-hover glass-card group relative overflow-hidden rounded-3xl">
                     <div class="p-8">
                         <div class="flex flex-col md:flex-row md:justify-between md:items-start mb-4">
@@ -530,7 +521,7 @@
                     </div>
                 </div>
 
-                <!-- 大创项目 -->
+                <!-- 大创项目 基础研究版本 -->
                 <div class="card-hover glass-card group relative overflow-hidden rounded-3xl">
                     <div class="p-8">
                         <div class="flex flex-col md:flex-row md:justify-between md:items-start mb-4">
@@ -561,7 +552,7 @@
 
                 <!-- 其他项目 -->
                 <div class="grid md:grid-cols-2 gap-6">
-                    <!-- 三下乡 -->
+                    <!-- 三下乡项目 -->
                     <div class="card-hover glass-card group relative overflow-hidden rounded-3xl">
                         <div class="p-6">
                             <div class="flex flex-col md:flex-row md:justify-between md:items-start mb-4">
@@ -581,7 +572,7 @@
                         </div>
                     </div>
 
-                    <!-- 数智化课程 -->
+                    <!-- 数智化课程建设项目 -->
                     <div class="card-hover glass-card group relative overflow-hidden rounded-3xl">
                         <div class="p-6">
                             <div class="flex flex-col md:flex-row md:justify-between md:items-start mb-4">
@@ -608,7 +599,7 @@
         <section id="awards" class="fade-in">
             <h2 class="text-3xl font-bold text-white mb-12 text-center">荣誉奖项</h2>
             <div class="grid md:grid-cols-2 gap-6">
-                <!-- 国家级 -->
+                <!-- 国家级奖项 -->
                 <div class="card-hover glass-card p-7 rounded-3xl">
                     <div class="text-accent-gold text-2xl mb-4 flex items-center gap-2">
                         <i class="fas fa-medal"></i>
@@ -623,7 +614,7 @@
                     </ul>
                 </div>
 
-                <!-- 自治区级 -->
+                <!-- 自治区级奖项 -->
                 <div class="card-hover glass-card p-7 rounded-3xl">
                     <div class="text-accent-blue text-2xl mb-4 flex items-center gap-2">
                         <i class="fas fa-award"></i>
@@ -653,7 +644,7 @@
                     </ul>
                 </div>
 
-                <!-- 校级金奖 -->
+                <!-- 校级金奖/特等奖 -->
                 <div class="card-hover glass-card p-7 rounded-3xl">
                     <div class="text-accent-teal text-2xl mb-4 flex items-center gap-2">
                         <i class="fas fa-trophy"></i>
@@ -678,7 +669,7 @@
                     </ul>
                 </div>
 
-                <!-- 校级银奖 -->
+                <!-- 校级一等奖/银奖 -->
                 <div class="card-hover glass-card p-7 rounded-3xl">
                     <div class="text-purple-400 text-2xl mb-4 flex items-center gap-2">
                         <i class="fas fa-star"></i>
@@ -760,7 +751,7 @@
         </section>
     </main>
 
-    <!-- 彩蛋模态框 -->
+    <!-- 彩蛋确认模态框 -->
     <div id="easter-egg-modal" class="modal-overlay">
         <div class="modal-content text-center">
             <div class="text-5xl mb-4">🎉</div>
@@ -784,7 +775,8 @@
     </footer>
 
     <script>
-        // 打字机
+        // 打字机效果
+
         const texts = [
             "英语演讲者",
             "跨文化交流者",
@@ -817,7 +809,7 @@
             setTimeout(type, 150);
         }
 
-        // 滚动显示
+        // 滚动显示动画
         function handleScrollAnimation() {
             const elements = document.querySelectorAll('.fade-in');
             elements.forEach(element => {
@@ -829,7 +821,7 @@
             });
         }
 
-        // 平滑滚动 (修复版)
+        // 平滑滚动
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
@@ -837,7 +829,6 @@
                 if (targetId === '#') return;
                 const targetElement = document.querySelector(targetId);
                 if (targetElement) {
-                    // 减去导航栏高度 (约80px)
                     window.scrollTo({
                         top: targetElement.offsetTop - 80,
                         behavior: 'smooth'
@@ -846,7 +837,7 @@
             });
         });
 
-        // 彩蛋逻辑
+        // 彩蛋：连续按10次s解锁金色主题
         let sPressCount = 0;
         let lastPressTime = 0;
         const modal = document.getElementById('easter-egg-modal');
@@ -872,12 +863,14 @@
             }
         });
 
+        // 取消彩蛋
         if (cancelBtn) {
             cancelBtn.addEventListener('click', () => {
                 if (modal) modal.classList.remove('active');
             });
         }
 
+        // 点击模态框背景关闭
         if (modal) {
             modal.addEventListener('click', (e) => {
                 if (e.target === modal) {
@@ -886,9 +879,12 @@
             });
         }
 
+        // 确认解锁金色主题
         if (confirmBtn) {
             confirmBtn.addEventListener('click', () => {
                 if (modal) modal.classList.remove('active');
+
+                // 修改页面主题
                 document.body.classList.remove('bg-deep-bg');
                 document.body.classList.add('bg-gold-bg');
 
@@ -914,6 +910,19 @@
                     featuredProject.classList.add('gold-glass-featured');
                 }
 
+                const contactBtn = document.querySelector('a[href="#contact"]');
+                if (contactBtn) {
+                    contactBtn.classList.remove('border-accent-blue', 'text-accent-blue', 'hover:bg-accent-blue');
+                    contactBtn.classList.add('border-accent-gold', 'text-accent-gold', 'hover:bg-accent-gold');
+                }
+
+                const projectBtn = document.querySelector('a[href="#projects"]');
+                if (projectBtn) {
+                    projectBtn.classList.remove('bg-accent-purple', 'hover:bg-purple-600');
+                    projectBtn.classList.add('bg-accent-gold', 'hover:bg-yellow-600');
+                }
+
+                // 显示通知
                 const toast = document.createElement('div');
                 toast.style.position = 'fixed';
                 toast.style.top = '80px';

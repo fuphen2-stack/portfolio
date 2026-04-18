@@ -1,0 +1,930 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns="http://www.w3.org/1999/html">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>李家兴 | 英语+语言数据科学 | 语词寰响项目负责人</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'deep-bg': '#0f172a',
+                        'card-bg': '#1e293b',
+                        'accent-blue': '#3b82f6',
+                        'accent-teal': '#14b8a6',
+                        'accent-gold': '#f59e0b',
+                        'accent-purple': '#8b5cf6',
+                        'gold-bg': '#1a1403',
+                        'gold-card': '#2d2106',
+                    },
+                    fontFamily: {
+                        'sans': ['"Inter"', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* 自定义滚动条 */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #0f172a;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #475569;
+            border-radius: 4px;
+        }
+
+        /* 发光效果类 */
+        .glow-text {
+            text-shadow: 0 0 10px rgba(59, 130, 246, 0.5), 0 0 20px rgba(59, 130, 246, 0.3);
+        }
+
+        .gold-glow-text {
+            text-shadow: 0 0 10px rgba(245, 158, 11, 0.7), 0 0 20px rgba(245, 158, 11, 0.4);
+        }
+
+        /* 背景网格动画 */
+        .bg-grid {
+            background-size: 40px 40px;
+            background-image:
+                linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+        }
+
+        /* 玻璃拟态效果 */
+        .glass-card {
+            background: rgba(30, 41, 59, 0.6);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+        }
+
+        .glass-hero {
+            background: rgba(15, 23, 42, 0.7);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        .glass-nav {
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        .glass-featured {
+            background: rgba(30, 41, 59, 0.6);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(139, 92, 246, 0.3);
+        }
+
+        .gold-glass-featured {
+            background: rgba(45, 33, 6, 0.6);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(245, 158, 11, 0.4);
+        }
+
+        /* 卡片悬浮效果 */
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+
+        .card-hover:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(59, 130, 246, 0.15);
+        }
+
+        .gold-card-hover:hover {
+            box-shadow: 0 20px 40px rgba(245, 158, 11, 0.2);
+        }
+
+        /* 核心项目特殊效果 */
+        .featured-project {
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.05), rgba(30, 41, 59, 1));
+        }
+
+        .featured-project:hover {
+            border-color: rgba(139, 92, 246, 0.6);
+            box-shadow: 0 20px 40px rgba(139, 92, 246, 0.15);
+        }
+
+        .gold-featured-project {
+            border: 1px solid rgba(245, 158, 11, 0.4);
+            background: linear-gradient(135deg, rgba(245, 158, 11, 0.08), rgba(45, 33, 6, 1));
+        }
+
+        .gold-featured-project:hover {
+            border-color: rgba(245, 158, 11, 0.7);
+            box-shadow: 0 20px 40px rgba(245, 158, 11, 0.2);
+        }
+
+        /* 打字机光标 */
+        .cursor-blink {
+            animation: blink 1s step-end infinite;
+        }
+
+        @keyframes blink {
+            50% {
+                opacity: 0;
+            }
+        }
+
+        /* 滚动显示动画 */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* 模态框样式 */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(4px);
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            background: rgba(30, 41, 59, 0.9);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 2rem;
+            max-width: 400px;
+            width: 90%;
+            transform: scale(0.9);
+            transition: transform 0.3s ease;
+        }
+
+        .modal-overlay.active .modal-content {
+            transform: scale(1);
+        }
+    </style>
+</head>
+
+<body class="bg-deep-bg text-gray-300 font-sans antialiased selection:bg-accent-blue selection:text-white">
+    <!-- 导航栏 -->
+    <nav class="fixed w-full z-50 glass-nav border-b border-white/5">
+        <div class="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="#" class="text-2xl font-bold text-white">李家兴</a>
+            <div class="hidden md:flex items-center space-x-8 text-sm font-medium">
+                <a href="#about" class="hover:text-accent-blue transition-colors text-accent-blue">关于我</a>
+                <a href="#research" class="hover:text-accent-blue transition-colors">研究方向</a>
+                <a href="#education" class="hover:text-accent-blue transition-colors">教育背景</a>
+                <a href="#skills" class="hover:text-accent-blue transition-colors">技能专长</a>
+                <a href="#projects" class="hover:text-accent-blue transition-colors">核心项目</a>
+                <a href="#awards" class="hover:text-accent-blue transition-colors">荣誉奖项</a>
+                <a href="#contact"
+                    class="px-4 py-2 border border-accent-blue text-accent-blue rounded hover:bg-accent-blue hover:text-white transition-all">联系我</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="relative min-h-screen flex items-center justify-center overflow-hidden bg-grid glass-hero">
+        <div class="absolute inset-0 bg-gradient-to-b from-deep-bg via-transparent to-deep-bg"></div>
+        <div class="relative z-10 text-center px-4">
+            <div
+                class="mb-6 inline-block px-4 py-2 border border-white/20 rounded-full text-xs tracking-widest uppercase text-gray-400">
+                英语专业（语言数据科学方向） | 语词寰响项目负责人
+            </div>
+            <h1 id="hero-title" class="text-6xl md:text-8xl font-bold text-white mb-6 tracking-tight">
+                你好，我是<span class="text-accent-blue glow-text">李家兴</span>
+            </h1>
+            <div class="text-xl md:text-2xl text-gray-400 h-8 mb-12">
+                <span id="typewriter"></span><span class="cursor-blink text-accent-blue">|</span>
+            </div>
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <a href="#projects"
+                    class="group flex items-center justify-center gap-2 px-6 py-3 bg-accent-purple text-white font-medium rounded-lg hover:bg-purple-600 transition-colors">
+                    <i class="fas fa-rocket"></i>
+                    <span>查看语词寰响项目</span>
+                </a>
+                <a href="#awards"
+                    class="group flex items-center justify-center gap-2 px-6 py-3 border border-white/20 text-white font-medium rounded-lg hover:bg-white/10 transition-colors">
+                    <i class="fas fa-trophy"></i>
+                    <span>荣誉奖项</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-6xl mx-auto px-6 py-20 space-y-32">
+        <!-- About Section -->
+        <section id="about" class="fade-in">
+            <h2 class="text-3xl font-bold text-white mb-12 text-center">关于我</h2>
+            <!-- 核心修改：grid改为items-stretch，右侧改为flex垂直分布实现底部对齐 -->
+            <div class="grid md:grid-cols-5 gap-8 items-stretch">
+                <!-- 左侧：照片 -->
+                <div class="md:col-span-2 relative group">
+                    <div
+                        class="absolute -inset-1 bg-gradient-to-r from-accent-purple to-accent-blue rounded-lg blur opacity-25 group-hover:opacity-75 transition duration-1000">
+                    </div>
+                    <div
+                        class="relative aspect-[3/4] glass-card rounded-lg border border-white/10 overflow-hidden h-full">
+                        <img src="images/000.jpg" alt="李家兴个人照片" class="w-full h-full object-cover">
+                    </div>
+                </div>
+
+                <!-- 右侧：文字内容（flex垂直分布，研究方向自动贴底） -->
+                <div class="md:col-span-3 flex flex-col justify-between">
+                    <!-- 上部内容：个人简介+关键数字 -->
+                    <div class="mb-auto">
+                        <!-- 个人简介 -->
+                        <div class="space-y-4 mb-8">
+                            <p class="text-lg text-gray-400 leading-relaxed" style="margin-top: 16px; margin-left: 0px; padding-top: 0px; padding-left: 0px; font-size: 20px; font-weight: 400; color: rgb(156, 163, 175)">我是系列项目的创始人兼负责人，专注于基于语料库的中国特色话语国际传播效度研究。同时在各类国家级、省级英语竞赛中屡获佳绩，具备出色的跨文化沟通能力和项目领导力。</p>
+                            <p class="text-lg text-gray-400 leading-relaxed"style="margin-top: 16px; margin-left: 0px; padding-top: 0px; padding-left: 0px; font-size: 20px; font-weight: 400; color: rgb(156, 163, 175)">
+                                我是<strong class="text-accent-purple">语词寰响</strong>系列项目的创始人兼负责人，专注于基于语料库的中国特色话语国际传播效度研究。同时在各类国家级、省级英语竞赛中屡获佳绩，具备出色的跨文化沟通能力和项目领导力。
+                            </p>
+                        </div>
+
+                        <!-- 关键数字 -->
+                        <div class="grid grid-cols-4 gap-4">
+                            <div class="text-center p-4 glass-card rounded-lg border border-white/5">
+                                <div class="text-3xl font-bold text-accent-blue">18+</div>
+                                <div class="text-xs text-gray-500 uppercase mt-1">荣誉奖项</div>
+                            </div>
+                            <div class="text-center p-4 glass-card rounded-lg border border-white/5">
+                                <div class="text-3xl font-bold text-accent-purple">3</div>
+                                <div class="text-xs text-gray-500 uppercase mt-1">核心项目</div>
+                            </div>
+                            <div class="text-center p-4 glass-card rounded-lg border border-white/5">
+                                <div class="text-3xl font-bold text-accent-teal">2</div>
+                                <div class="text-xs text-gray-500 uppercase mt-1">国赛经历</div>
+                            </div>
+                            <div class="text-center p-4 glass-card rounded-lg border border-white/5">
+                                <div class="text-3xl font-bold text-accent-gold">1</div>
+                                <div class="text-xs text-gray-500 uppercase mt-1">微专业</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 研究方向（自动与左侧照片底部对齐） -->
+                    <div class="glass-card p-6 rounded-lg border border-white/10 mt-8">
+                        <h3 class="text-lg font-bold text-white mb-4 flex items-center gap-2">
+                            <i class="fas fa-compass text-accent-purple"></i> 研究方向
+                        </h3>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="flex items-center gap-3">
+                                <i class="fas fa-book-open text-accent-purple"></i>
+                                <span class="text-sm">智能语料库与自然语言处理</span>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <i class="fas fa-comments text-accent-purple"></i>
+                                <span class="text-sm">多模态话语分析与翻译研究</span>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <i class="fas fa-globe text-accent-purple"></i>
+                                <span class="text-sm">中国特色话语国际传播</span>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <i class="fas fa-graduation-cap text-accent-purple"></i>
+                                <span class="text-sm">数字人文与新文科建设</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Education Section -->
+        <section id="education" class="fade-in">
+            <h2 class="text-3xl font-bold text-white mb-12 text-center">教育背景</h2>
+            <div class="space-y-8">
+                <!-- 主专业 -->
+                <div class="card-hover glass-card p-8 rounded-xl border border-white/5">
+                    <div class="flex flex-col md:flex-row md:justify-between md:items-start mb-4">
+                        <div>
+                            <h3 class="text-xl font-bold text-white">内蒙古工业大学 · 外国语学院</h3>
+                            <p class="text-accent-blue font-medium">英语（语言数据科学方向）· 本科</p>
+                        </div>
+                        <div class="text-gray-500 mt-2 md:mt-0">2024.09 - 2028.06</div>
+                    </div>
+                    <p class="text-gray-400">
+                        主修课程：综合英语、英语视听说、英语写作、英语语音、英语语法、
+                        跨文化交际、理解当代中国(英)、英汉/汉英笔译、语言学导论、高级英语、英汉/汉英口译、
+                        翻译技术、研究方法与学术写作、高等数学C、语言大数据挖掘与分析、
+                        语言数字人文导论、Python编程与语言数据科学开发、自然语言处理与大模型技术、
+                        语言人工智能、语料库与话语研究、专门用途英语（数据科学）、本地化语言服务
+                    </p>
+                </div>
+
+                <!-- 微专业 -->
+                <div class="card-hover glass-card p-8 rounded-xl border border-white/5">
+                    <div class="flex flex-col md:flex-row md:justify-between md:items-start mb-4">
+                        <div>
+                            <h3 class="text-xl font-bold text-white">内蒙古工业大学 · 国际交流与全球胜任力微专业</h3>
+                            <p class="text-accent-teal font-medium">已结业</p>
+                        </div>
+                        <div class="text-gray-500 mt-2 md:mt-0">2025.04 - 2025.11</div>
+                    </div>
+                    <p class="text-gray-400">
+                        系统学习了一带一路国家概况、当代中国外交、国际政治导论、中国思想经典导读、
+                        英语国家社会与文化、一带一路国家概况、国际组织与全球治理、国际传播策略等课程，
+                        全面提升了国际交流能力和全球胜任力。
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Skills Section -->
+        <section id="skills" class="fade-in">
+            <h2 class="text-3xl font-bold text-white mb-12 text-center">技能专长</h2>
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- 英语能力 -->
+                <div class="card-hover glass-card p-6 rounded-xl border border-white/5">
+                    <div class="text-accent-blue text-2xl mb-4"><i class="fas fa-language"></i></div>
+                    <h3 class="text-xl font-bold text-white mb-4">英语能力</h3>
+                    <ul class="space-y-3 text-gray-400">
+                        <li class="flex items-center gap-2">
+                            <i class="fas fa-star text-accent-gold"></i>
+                            <span>英语演讲：自治区级获奖</span>
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <i class="fas fa-star text-accent-gold"></i>
+                            <span>英语笔译：专业级水平</span>
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <i class="fas fa-star text-accent-gold"></i>
+                            <span>跨文化交流：国家级获奖</span>
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <i class="fas fa-star text-accent-gold"></i>
+                            <span>英语短视频创作：国家级获奖</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- 数据科学技能 -->
+                <div class="card-hover glass-card p-6 rounded-xl border border-white/5">
+                    <div class="text-accent-teal text-2xl mb-4"><i class="fas fa-chart-line"></i></div>
+                    <h3 class="text-xl font-bold text-white mb-4">数据科学技能</h3>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="px-3 py-1 bg-teal-500/10 text-teal-400 rounded text-sm">Python</span>
+                        <span class="px-3 py-1 bg-teal-500/10 text-teal-400 rounded text-sm">NLTK/Spacy</span>
+                        <span class="px-3 py-1 bg-teal-500/10 text-teal-400 rounded text-sm">语料库构建</span>
+                        <span class="px-3 py-1 bg-teal-500/10 text-teal-400 rounded text-sm">语料标注</span>
+                        <span class="px-3 py-1 bg-teal-500/10 text-teal-400 rounded text-sm">文本挖掘</span>
+                        <span class="px-3 py-1 bg-teal-500/10 text-teal-400 rounded text-sm">数据可视化</span>
+                        <span class="px-3 py-1 bg-teal-500/10 text-teal-400 rounded text-sm">Excel高级应用</span>
+                    </div>
+                </div>
+
+                <!-- 综合能力 -->
+                <div class="card-hover glass-card p-6 rounded-xl border border-white/5">
+                    <div class="text-accent-gold text-2xl mb-4"><i class="fas fa-users"></i></div>
+                    <h3 class="text-xl font-bold text-white mb-4">综合能力</h3>
+                    <ul class="space-y-3 text-gray-400">
+                        <li class="flex items-center gap-2">
+                            <i class="fas fa-check text-accent-gold"></i>
+                            <span>项目管理与团队领导</span>
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <i class="fas fa-check text-accent-gold"></i>
+                            <span>学术论文与报告撰写</span>
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <i class="fas fa-check text-accent-gold"></i>
+                            <span>PPT制作与路演答辩</span>
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <i class="fas fa-check text-accent-gold"></i>
+                            <span>视频拍摄与剪辑</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Projects Section -->
+        <section id="projects" class="fade-in">
+            <h2 class="text-3xl font-bold text-white mb-12">核心项目</h2>
+            <div class="space-y-8">
+                <!-- 语词寰响 2026 最新版本 -->
+                <div class="card-hover glass-featured group relative overflow-hidden rounded-xl">
+                    <div class="p-8">
+                        <div class="flex flex-col md:flex-row md:justify-between md:items-start mb-4">
+                            <div>
+                                <div
+                                    class="inline-block px-3 py-1 bg-purple-500/20 text-purple-400 rounded-full text-xs font-medium mb-2">
+                                    🔥 2026 最新项目 · 中国国际大学生创新大赛（2026）
+                                </div>
+                                <h3
+                                    class="text-2xl font-bold text-white group-hover:text-accent-purple transition-colors">
+                                    语词寰响：从课堂走向世界的英语智能语料库
+                                </h3>
+                                <p class="text-accent-purple font-medium">新文科赛道 · 创始人/负责人</p>
+                            </div>
+                            <div class="text-gray-500 mt-2 md:mt-0">2026.03 - 至今</div>
+                        </div>
+                        <p class="text-gray-400 mb-4">
+                            基于前序研究成果，将语料库研究升级为<strong class="text-white">智能化、产品化</strong>的英语学习平台。
+                            构建包含《理解当代中国》系列教材全量内容的多模态智能语料库，
+                            集成AI辅助翻译、词汇难度分级、国际传播效度评分等功能，
+                            为全国高校英语教学和中国话语国际传播提供数据支持和技术工具。
+                        </p>
+                        <div class="flex gap-2 flex-wrap">
+                            <span class="text-xs px-2 py-1 bg-purple-500/10 text-purple-400 rounded">智能语料库</span>
+                            <span class="text-xs px-2 py-1 bg-blue-500/10 text-blue-400 rounded">NLP技术</span>
+                            <span class="text-xs px-2 py-1 bg-green-500/10 text-green-400 rounded">产品化</span>
+                            <span class="text-xs px-2 py-1 bg-yellow-500/10 text-yellow-400 rounded">教育科技</span>
+                            <span class="text-xs px-2 py-1 bg-red-500/10 text-red-400 rounded">国际传播</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 语词寰响 2025 互联网+版本 -->
+                <div class="card-hover glass-card group relative overflow-hidden rounded-xl">
+                    <div class="p-8">
+                        <div class="flex flex-col md:flex-row md:justify-between md:items-start mb-4">
+                            <div>
+                                <div
+                                    class="inline-block px-3 py-1 bg-blue-500/20 text-blue-400 rounded-full text-xs font-medium mb-2">
+                                    中国国际大学生创新大赛（2025）
+                                </div>
+                                <h3 class="text-xl font-bold text-white group-hover:text-accent-blue transition-colors">
+                                    语词寰响——基于语料库的《理解当代中国（英）》系列教材词汇与表达的国际传播效度研究
+                                </h3>
+                                <p class="text-accent-blue font-medium">新文科赛道 · 创始人/负责人/第一作者 · 校级银奖</p>
+                            </div>
+                            <div class="text-gray-500 mt-2 md:mt-0">2025.03 - 2025.08</div>
+                        </div>
+                        <p class="text-gray-400 mb-4">
+                            首次将语料库语言学方法应用于《理解当代中国》系列教材的国际传播研究。
+                            构建了包含100万词的教材专用语料库，通过对比分析国际主流媒体语料库，
+                            量化评估中国特色词汇的国际传播效度，提出了针对性的翻译和传播策略建议。
+                        </p>
+                        <div class="flex gap-2 flex-wrap">
+                            <span class="text-xs px-2 py-1 bg-blue-500/10 text-blue-400 rounded">语料库构建</span>
+                            <span class="text-xs px-2 py-1 bg-green-500/10 text-green-400 rounded">对比分析</span>
+                            <span class="text-xs px-2 py-1 bg-purple-500/10 text-purple-400 rounded">传播效度</span>
+                            <span class="text-xs px-2 py-1 bg-orange-500/10 text-orange-400 rounded">学术研究</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 大创项目 基础研究版本 -->
+                <div class="card-hover glass-card group relative overflow-hidden rounded-xl">
+                    <div class="p-8">
+                        <div class="flex flex-col md:flex-row md:justify-between md:items-start mb-4">
+                            <div>
+                                <div
+                                    class="inline-block px-3 py-1 bg-teal-500/20 text-teal-400 rounded-full text-xs font-medium mb-2">
+                                    大学生创新创业训练计划
+                                </div>
+                                <h3 class="text-xl font-bold text-white group-hover:text-accent-teal transition-colors">
+                                    基于语料库的《理解当代中国（英）》系列教材词汇与表达的国际传播效度研究
+                                </h3>
+                                <p class="text-accent-teal font-medium">校级重点项目 · 负责人</p>
+                            </div>
+                            <div class="text-gray-500 mt-2 md:mt-0">2025.03 - 2027.03</div>
+                        </div>
+                        <p class="text-gray-400 mb-4">
+                            项目的基础研究版本，旨在系统梳理《理解当代中国》系列教材中的中国特色话语体系，
+                            建立科学的国际传播效度评估指标体系。通过定量与定性相结合的研究方法，
+                            为提升中国话语的国际传播能力提供学术支撑和实践指导。
+                        </p>
+                        <div class="flex gap-2 flex-wrap">
+                            <span class="text-xs px-2 py-1 bg-teal-500/10 text-teal-400 rounded">语料库语言学</span>
+                            <span class="text-xs px-2 py-1 bg-red-500/10 text-red-400 rounded">话语分析</span>
+                            <span class="text-xs px-2 py-1 bg-indigo-500/10 text-indigo-400 rounded">指标体系</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 其他项目 -->
+                <div class="grid md:grid-cols-2 gap-8">
+                    <!-- 三下乡项目 -->
+                    <div class="card-hover glass-card group relative overflow-hidden rounded-xl">
+                        <div class="p-6">
+                            <div class="flex flex-col md:flex-row md:justify-between md:items-start mb-4">
+                                <div>
+                                    <h3
+                                        class="text-lg font-bold text-white group-hover:text-accent-blue transition-colors">
+                                        暑期"三下乡"社会实践活动
+                                    </h3>
+                                    <p class="text-accent-teal font-medium">校级一般项目 · 负责人 · 已结项</p>
+                                </div>
+                                <div class="text-gray-500 mt-2 md:mt-0 text-sm">2025.07 - 2025.09</div>
+                            </div>
+                            <p class="text-gray-400 text-sm mb-4">
+                                项目名称："敕勒北疆·印记千年"。带领团队深入内蒙古地区开展文化调研，
+                                挖掘和传播当地优秀传统文化，形成了高质量的调研报告和实践成果。
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- 数智化课程建设项目 -->
+                    <div class="card-hover glass-card group relative overflow-hidden rounded-xl">
+                        <div class="p-6">
+                            <div class="flex flex-col md:flex-row md:justify-between md:items-start mb-4">
+                                <div>
+                                    <h3
+                                        class="text-lg font-bold text-white group-hover:text-accent-blue transition-colors">
+                                        数智化课程建设项目
+                                    </h3>
+                                    <p class="text-accent-gold font-medium">参与人</p>
+                                </div>
+                                <div class="text-gray-500 mt-2 md:mt-0 text-sm">2025.07 - 2027.07</div>
+                            </div>
+                            <p class="text-gray-400 text-sm mb-4">
+                                参与马克思主义学院郝凤军老师主持的数智化课程建设项目，
+                                负责课程资源的收集整理、数字化转换和多媒体内容制作。
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Awards Section -->
+        <section id="awards" class="fade-in">
+            <h2 class="text-3xl font-bold text-white mb-12 text-center">荣誉奖项</h2>
+            <div class="grid md:grid-cols-2 gap-8">
+                <!-- 国家级奖项 -->
+                <div class="card-hover glass-card p-6 rounded-xl border border-white/5">
+                    <div class="text-accent-gold text-2xl mb-4 flex items-center gap-2">
+                        <i class="fas fa-medal"></i>
+                        <h3 class="text-xl font-bold text-white">国家级奖项</h3>
+                    </div>
+                    <ul class="space-y-4 text-gray-400">
+                        <li class="border-l-4 border-accent-gold pl-4">
+                            <p class="font-medium text-white">第八届"外教社杯"全国高校学生跨文化能力大赛</p>
+                            <p class="text-sm">"讲述中国 传播中国"短视频大赛 国家级二等奖</p>
+                            <p class="text-xs text-gray-500">2025.12 · 负责人/第一作者</p>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- 自治区级奖项 -->
+                <div class="card-hover glass-card p-6 rounded-xl border border-white/5">
+                    <div class="text-accent-blue text-2xl mb-4 flex items-center gap-2">
+                        <i class="fas fa-award"></i>
+                        <h3 class="text-xl font-bold text-white">自治区级奖项</h3>
+                    </div>
+                    <ul class="space-y-4 text-gray-400">
+                        <li class="border-l-4 border-accent-blue pl-4">
+                            <p class="font-medium text-white">第八届"外教社杯"全国高校学生跨文化能力大赛</p>
+                            <p class="text-sm">"讲述中国 传播中国"短视频大赛 内蒙古自治区特等奖</p>
+                            <p class="text-xs text-gray-500">2025.11 · 负责人/第一作者</p>
+                        </li>
+                        <li class="border-l-4 border-accent-blue pl-4">
+                            <p class="font-medium text-white">"外研社·国才杯"全国大学生外语能力大赛</p>
+                            <p class="text-sm">英语组演讲赛项 内蒙古自治区铜奖</p>
+                            <p class="text-xs text-gray-500">2025.11</p>
+                        </li>
+                        <li class="border-l-4 border-accent-blue pl-4">
+                            <p class="font-medium text-white">第30届中国日报社"21世纪杯"全国英语演讲比赛</p>
+                            <p class="text-sm">内蒙古自治区三等奖</p>
+                            <p class="text-xs text-gray-500">2025.06</p>
+                        </li>
+                        <li class="border-l-4 border-accent-blue pl-4">
+                            <p class="font-medium text-white">"外研社·国才杯"全国大学生外语能力大赛</p>
+                            <p class="text-sm">英语组短视频赛项 内蒙古自治区铜奖</p>
+                            <p class="text-xs text-gray-500">2024.11 · 负责人/第一作者</p>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- 校级金奖/特等奖 -->
+                <div class="card-hover glass-card p-6 rounded-xl border border-white/5">
+                    <div class="text-accent-teal text-2xl mb-4 flex items-center gap-2">
+                        <i class="fas fa-trophy"></i>
+                        <h3 class="text-xl font-bold text-white">校级金奖/特等奖</h3>
+                    </div>
+                    <ul class="space-y-4 text-gray-400">
+                        <li class="border-l-4 border-accent-teal pl-4">
+                            <p class="font-medium text-white">"外研社·国才杯"全国大学生外语能力大赛</p>
+                            <p class="text-sm">英语组演讲赛项 内蒙古工业大学金奖</p>
+                            <p class="text-xs text-gray-500">2025.10</p>
+                        </li>
+                        <li class="border-l-4 border-accent-teal pl-4">
+                            <p class="font-medium text-white">第30届中国日报社"21世纪杯"全国英语演讲比赛</p>
+                            <p class="text-sm">内蒙古工业大学特等奖</p>
+                            <p class="text-xs text-gray-500">2025.04</p>
+                        </li>
+                        <li class="border-l-4 border-accent-teal pl-4">
+                            <p class="font-medium text-white">"外研社·国才杯"全国大学生外语能力大赛</p>
+                            <p class="text-sm">英语组短视频赛项 内蒙古工业大学金奖</p>
+                            <p class="text-xs text-gray-500">2024.10 · 负责人/第一作者</p>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- 校级一等奖/银奖 -->
+                <div class="card-hover glass-card p-6 rounded-xl border border-white/5">
+                    <div class="text-purple-400 text-2xl mb-4 flex items-center gap-2">
+                        <i class="fas fa-star"></i>
+                        <h3 class="text-xl font-bold text-white">校级一等奖/银奖</h3>
+                    </div>
+                    <ul class="space-y-4 text-gray-400">
+                        <li class="border-l-4 border-purple-400 pl-4">
+                            <p class="font-medium text-white">中国国际大学生创新大赛（2025）</p>
+                            <p class="text-sm">新文科赛道 内蒙古工业大学银奖</p>
+                            <p class="text-xs text-gray-500">2025.05 · 负责人/第一作者</p>
+                        </li>
+                        <li class="border-l-4 border-purple-400 pl-4">
+                            <p class="font-medium text-white">"高教社杯"大学生"用外语讲好中国故事"短视频大赛</p>
+                            <p class="text-sm">内蒙古工业大学一等奖</p>
+                            <p class="text-xs text-gray-500">2025.04 · 负责人/第一作者</p>
+                        </li>
+                        <li class="border-l-4 border-purple-400 pl-4">
+                            <p class="font-medium text-white">"外研社·国才杯"全国大学生外语能力大赛</p>
+                            <p class="text-sm">英语组笔译赛项 内蒙古工业大学银奖</p>
+                            <p class="text-xs text-gray-500">2025.10</p>
+                        </li>
+                        <li class="border-l-4 border-purple-400 pl-4">
+                            <p class="font-medium text-white">全国大学生职业规划大赛</p>
+                            <p class="text-sm">内蒙古工业大学外国语学院一等奖（2次）</p>
+                            <p class="text-xs text-gray-500">2024.10、2025.11</p>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="fade-in text-center py-20 border-t border-white/5">
+            <h2 class="text-4xl font-bold text-white mb-6">让我们一起讲好中国故事</h2>
+            <p class="text-gray-400 max-w-xl mx-auto mb-8">
+                如果你对语料库研究、中国话语国际传播或者“语词寰响”项目感兴趣，<br>
+                欢迎随时与我联系交流！
+            </p>
+            <div class="flex flex-col sm:flex-row justify-center gap-4 mb-12">
+                <a href="mailto:orionlee@qq.com"
+                    class="inline-flex items-center justify-center gap-2 px-8 py-4 bg-accent-purple text-white font-bold rounded-lg hover:bg-purple-600 transition-colors cursor-pointer">
+                    <i class="fas fa-envelope"></i>
+                    <span>orionlee@qq.com</span>
+                </a>
+                <a href="tel:18747543270"
+                    class="inline-flex items-center justify-center gap-2 px-8 py-4 bg-accent-purple text-white font-bold rounded-lg hover:bg-purple-600 transition-colors cursor-pointer">
+                    <i class="fas fa-phone"></i>
+                    <span>+86 18747543270</span>
+                </a>
+            </div>
+            <div class="flex justify-center gap-8 text-gray-500">
+                <!-- YouTube -->
+                <a href="https://www.youtube.com/channel/UCmd6V62s1_fOXD8JHY4zU8A" target="_blank"
+                    class="hover:text-white transition-colors text-2xl">
+                    <i class="fab fa-youtube"></i>
+                </a>
+                <!-- 微信 -->
+                <div class="relative group">
+                    <a href="#" class="hover:text-white transition-colors text-2xl">
+                        <i class="fab fa-weixin"></i>
+                    </a>
+                    <div class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 hidden group-hover:block">
+                        <img src="D:\Desktop\0ba7a57f03a362469bc24370e994b1c9.jpg" alt="微信二维码"
+                            class="w-32 h-32 rounded-lg shadow-lg border-2 border-white">
+                    </div>
+                </div>
+                <!-- QQ -->
+                <div class="relative group">
+                    <a href="tencent://message/?uin=241253869&Site=个人网站&Menu=yes"
+                        class="hover:text-white transition-colors text-2xl">
+                        <i class="fab fa-qq"></i>
+                    </a>
+                    <div class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 hidden group-hover:block">
+                        <img src="你的QQ二维码图片路径.jpg" alt="QQ二维码"
+                            class="w-32 h-32 rounded-lg shadow-lg border-2 border-white">
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- 彩蛋确认模态框 -->
+    <div id="easter-egg-modal" class="modal-overlay">
+        <div class="modal-content text-center">
+            <div class="text-5xl mb-4">🎉</div>
+            <h3 class="text-xl font-bold text-white mb-3">发现隐藏彩蛋！</h3>
+            <p class="text-gray-400 mb-6">恭喜你解锁了金色主题，点击确定立即切换页面风格</p>
+            <div class="flex gap-4 justify-center">
+                <button id="cancel-easter-egg"
+                    class="px-6 py-2 border border-white/20 text-white rounded-lg hover:bg-white/10 transition-colors">
+                    取消
+                </button>
+                <button id="confirm-easter-egg"
+                    class="px-6 py-2 bg-accent-gold text-white rounded-lg hover:bg-yellow-600 transition-colors">
+                    确定解锁
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <footer class="border-t border-white/5 py-8 text-center text-gray-600 text-sm">
+        <p>&copy; 2026 李家兴 · 语词寰响 · 让中国话语走向世界</p>
+    </footer>
+
+    <script>
+        // 打字机效果
+
+        const texts = [
+            "英语演讲者",
+            "跨文化交流者",
+            "语料库研究者",
+            "语词寰响创始人",
+            "中国故事讲述者"
+        ];
+        let count = 0;
+        let index = 0;
+        let currentText = "";
+        let letter = "";
+
+        function type() {
+            if (count === texts.length) count = 0;
+            currentText = texts[count];
+            letter = currentText.slice(0, ++index);
+
+            const typewriterElement = document.getElementById('typewriter');
+            if (typewriterElement) {
+                typewriterElement.textContent = letter;
+                typewriterElement.className = 'text-accent-blue';
+            }
+
+            if (letter.length === currentText.length) {
+                setTimeout(() => {
+                    index = 0;
+                    count++;
+                }, 2000);
+            }
+            setTimeout(type, 150);
+        }
+
+        // 滚动显示动画
+        function handleScrollAnimation() {
+            const elements = document.querySelectorAll('.fade-in');
+            elements.forEach(element => {
+                const elementTop = element.getBoundingClientRect().top;
+                const windowHeight = window.innerHeight;
+                if (elementTop < windowHeight * 0.85) {
+                    element.classList.add('visible');
+                }
+            });
+        }
+
+        // 平滑滚动
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // 彩蛋：连续按10次s解锁金色主题
+        let sPressCount = 0;
+        let lastPressTime = 0;
+        const modal = document.getElementById('easter-egg-modal');
+        const confirmBtn = document.getElementById('confirm-easter-egg');
+        const cancelBtn = document.getElementById('cancel-easter-egg');
+
+        document.addEventListener('keydown', (e) => {
+            if ((e.key === 's' || e.key === 'S') && !['INPUT', 'TEXTAREA'].includes(e.target.tagName)) {
+                const now = Date.now();
+                if (now - lastPressTime < 1000) {
+                    sPressCount++;
+                } else {
+                    sPressCount = 1;
+                }
+                lastPressTime = now;
+
+                if (sPressCount === 10) {
+                    if (modal) modal.classList.add('active');
+                    sPressCount = 0;
+                }
+            } else if (!['INPUT', 'TEXTAREA'].includes(e.target.tagName)) {
+                sPressCount = 0;
+            }
+        });
+
+        // 取消彩蛋
+        if (cancelBtn) {
+            cancelBtn.addEventListener('click', () => {
+                if (modal) modal.classList.remove('active');
+            });
+        }
+
+        // 点击模态框背景关闭
+        if (modal) {
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    modal.classList.remove('active');
+                }
+            });
+        }
+
+        // 确认解锁金色主题
+        if (confirmBtn) {
+            confirmBtn.addEventListener('click', () => {
+                if (modal) modal.classList.remove('active');
+
+                // 修改页面主题
+                document.body.classList.remove('bg-deep-bg');
+                document.body.classList.add('bg-gold-bg');
+
+                const nav = document.querySelector('nav');
+                if (nav) {
+                    nav.classList.remove('glass-nav');
+                    nav.classList.add('bg-gold-bg/80');
+                }
+
+                const heroSpan = document.querySelector('#hero-title span');
+                if (heroSpan) {
+                    heroSpan.classList.remove('text-accent-blue', 'glow-text');
+                    heroSpan.classList.add('text-accent-gold', 'gold-glow-text');
+                }
+
+                document.querySelectorAll('.card-hover').forEach(card => {
+                    card.classList.add('gold-card-hover');
+                });
+
+                const featuredProject = document.querySelector('.glass-featured');
+                if (featuredProject) {
+                    featuredProject.classList.remove('glass-featured');
+                    featuredProject.classList.add('gold-glass-featured');
+                }
+
+                const contactBtn = document.querySelector('a[href="#contact"]');
+                if (contactBtn) {
+                    contactBtn.classList.remove('border-accent-blue', 'text-accent-blue', 'hover:bg-accent-blue');
+                    contactBtn.classList.add('border-accent-gold', 'text-accent-gold', 'hover:bg-accent-gold');
+                }
+
+                const projectBtn = document.querySelector('a[href="#projects"]');
+                if (projectBtn) {
+                    projectBtn.classList.remove('bg-accent-purple', 'hover:bg-purple-600');
+                    projectBtn.classList.add('bg-accent-gold', 'hover:bg-yellow-600');
+                }
+
+                // 显示通知
+                const toast = document.createElement('div');
+                toast.style.position = 'fixed';
+                toast.style.top = '80px';
+                toast.style.left = '50%';
+                toast.style.transform = 'translateX(-50%)';
+                toast.style.background = 'rgba(30, 41, 59, 0.9)';
+                toast.style.backdropFilter = 'blur(10px)';
+                toast.style.border = '1px solid rgba(245, 158, 11, 0.3)';
+                toast.style.color = '#f59e0b';
+                toast.style.padding = '1rem 2rem';
+                toast.style.borderRadius = '8px';
+                toast.style.zIndex = '99';
+                toast.style.transition = 'transform 0.5s ease';
+                toast.innerHTML = '<i class="fas fa-check-circle mr-2"></i><span>金色主题已激活！</span>';
+                document.body.appendChild(toast);
+
+                setTimeout(() => {
+                    toast.style.transform = 'translateX(-50%) translateY(-100px)';
+                    setTimeout(() => toast.remove(), 500);
+                }, 3000);
+            });
+        }
+
+        // 初始化
+        document.addEventListener('DOMContentLoaded', () => {
+            type();
+            handleScrollAnimation();
+            window.addEventListener('scroll', handleScrollAnimation);
+        });
+    </script>
+</body>
+
+</html>
